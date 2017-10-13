@@ -49,8 +49,8 @@ bool valid(const vector<vector<int>> &shuju, const int hang, const int lie, cons
 
 
 bool shengcheng(vector<vector<int>> &shuju, const set<int> &shu) {
-
-	int hang(0), lie(0), suiji_number(0);
+	shuju.at(0).at(0) = 7;
+	int hang(0), lie(1), suiji_number(0);
 	vector<set<int>> zancun;
 	set<int> houxuan_number(shu);
 	while (hang < 9) {
@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
 	}
 	int cishu(atoi(argv[2])), i(0);
 
-	if (strcmp(argv[1],"-c")==0&& cishu > 0) {
+	if (strcmp(argv[1], "-c") == 0 && cishu > 0) {
 		while (i < cishu) {
 			if (shengcheng(shuju, shu)) {
 				print(shuju);
