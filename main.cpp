@@ -49,7 +49,7 @@ bool valid(const vector<vector<int>> &shuju, const int hang, const int lie, cons
 
 
 bool shengcheng(vector<vector<int>> &shuju, const set<int> &shu) {
-	shuju.at(0).at(0) = 7;
+	shuju.at(0).at(0) = (7+7)%9+1;
 	int hang(0), lie(1), suiji_number(0);
 	vector<set<int>> zancun;
 	set<int> houxuan_number(shu);
