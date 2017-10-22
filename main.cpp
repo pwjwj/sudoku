@@ -10,6 +10,7 @@
 using namespace std;
 string path = "./sudoku.txt";
 ofstream fout(path.c_str());
+char buff[200];
 bool valid(const vector<vector<int>> &shuju, const int hang, const int lie, const int &num) {
 	//在这里就是一个一个比对 因为后面的没有生成  只要判断已经生成的干扰项
 
@@ -48,8 +49,8 @@ bool valid(const vector<vector<int>> &shuju, const int hang, const int lie, cons
 }
 
 
-bool shengcheng(vector<vector<int>> &shuju, const set<int> &shu) {
-	shuju.at(0).at(0) = (7+7)%9+1;
+bool shengcheng(vector<vector<int>> &shuju, const set<int> &shu,int base) {
+	shuju.at(0).at(0) = base;
 	int hang(0), lie(1), suiji_number(0);
 	vector<set<int>> zancun;
 	set<int> houxuan_number(shu);
@@ -121,23 +122,28 @@ bool shengcheng(vector<vector<int>> &shuju, const set<int> &shu) {
 	}
 }
 void print(vector<vector<int>> &shuju) {
-
+	int k = 0;
 	int sizeofshuju = shuju.size();
 	int sizeofshuju1 = shuju.at(1).size();
 	for (int i = 0; i < sizeofshuju; i++) {
 		for (int j = 0; j < sizeofshuju1; j++) {
 			//cout << shuju.at(i).at(j) << " ";
-			fout << shuju.at(i).at(j);
+			//fout << shuju.at(i).at(j);
+			buff[k++] = shuju.at(i).at(j) + '0';
 			if (j != (sizeofshuju1 - 1)) {
-				fout << " ";
+				//fout << " ";
+				buff[k++] =' ';
 			}
 		}
 		if (i != (sizeofshuju - 1)) {
 			//cout << endl;
 			//fout << endl;
-			fout << "\n";
+			//fout << "\n";
+			buff[k++] = '\n';
 		}
 	}
+	buff[k] = '\0';
+	fout << buff;
 }
 void qingkong(vector<vector<int>> &shuju) {
 	for (int i = 0; i < 9; i++) {
@@ -149,6 +155,7 @@ void qingkong(vector<vector<int>> &shuju) {
 
 int main(int argc, char* argv[]) {
 	vector<vector<int>> shuju(9, vector<int>(9, 0));
+	int base = (7 + 7) % 9 + 1;
 	srand((unsigned)time(NULL));
 	set<int > shu;
 	for (int i = 1; i < 10; i++) {
@@ -158,7 +165,7 @@ int main(int argc, char* argv[]) {
 
 	if (strcmp(argv[1], "-c") == 0 && cishu > 0) {
 		while (i < cishu) {
-			if (shengcheng(shuju, shu)) {
+			if (shengcheng(shuju, shu,base)) {
 				print(shuju);
 				if (i != (cishu - 1)) {
 					//cout << endl;
